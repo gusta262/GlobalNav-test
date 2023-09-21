@@ -23,7 +23,7 @@ export const Main = () => {
     if (!message) return alert("Digite uma mensagem");
     if (!name) {
       alert("Você não está logado");
-      navigate("/")
+      navigate("/");
       return;
     }
 
