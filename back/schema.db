@@ -1,0 +1,39 @@
+DROP SCHEMA IF EXISTS globalnav_chat;
+CREATE SCHEMA globalnav_chat;
+USE globalnav_chat;
+
+CREATE TABLE IF NOT EXISTS Users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS ChatRooms (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT
+);
+
+CREATE TABLE IF NOT EXISTS Messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    room_id INT NOT NULL,
+    user_id INT NOT NULL,
+    content TEXT NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (room_id) REFERENCES ChatRooms(id),
+    FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+CREATE TABLE IF NOT EXISTS ChatRoomParticipants (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    room_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(id),
+    FOREIGN KEY (room_id) REFERENCES ChatRooms(id)
+);
+
+INSERT INTO Users (username, password, email) VALUES
+    ('Gustavo', '123456', 'gustavo@gmail.com'),
+    ('Bruna', '123456', 'bruna@gmail.com'),
+    ('Gabriel', '123456', 'gabriel@gmail.com');
